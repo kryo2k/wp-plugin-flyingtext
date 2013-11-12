@@ -21,15 +21,11 @@
     me.start = function(){
       if(started) return this; // bail if started
       started = true;
-      
-      console.log('starting...',this,arguments);
 
       var computeDuration = function(str, baseTimeout){
           return parseInt(baseTimeout) + (str.length * parseInt(myConfig.timeDelayPerChar));
         },
         rotate = function(callback){
-            
-            console.log('rotate...',this,arguments);
           callback = callback || function(){};
 
           var msgs = myConfig.messages, msg;
@@ -64,13 +60,12 @@
         };
 
       rotate(function(rotationId){
-        console.log('finished rotation', rotationId);
+      //  console.log('finished rotation', rotationId);
       });
       
       return this;
     };
     me.stop = function(){
-        console.log('stopping...',this,arguments);
       if(started) {
         started = false;
       }
@@ -79,7 +74,6 @@
     };
     me.configure = function(cfg){
       $.extend(myConfig, cfg);
-      console.log('configuring...',this,arguments);
 
       if(firstTimeConfigure && myConfig.autoStart) {
           me.start();
@@ -115,7 +109,6 @@
   }
 
   $.fn.flyingText = function() {
-      console.log('initializing...',this,arguments);
     return getInstance(this.selector).invocation(this, arguments);
   };
 
