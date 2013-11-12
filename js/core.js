@@ -51,8 +51,11 @@
 
 		if($el === undefined) {
 			$el = createEl(config.selector);
-			$el.flyingText(config.flyingText);
 		}
+
+		console.log("running with: ", config.flyingText);
+
+		$el.flyingText(config.flyingText);
 
 		return me;
 	}
