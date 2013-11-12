@@ -1,2 +1,19 @@
 @CHARSET "UTF-8";
 @import "compass/css3";
+
+.flying-text-area {
+	position: absolute;
+	line-height: 4em;
+	top:1em;
+	left: 20%;
+	right: 20%;
+	bottom: 1em;
+	margin: 0 auto;
+	color: white;
+	white-space: nowrap;
+
+	.string {
+		position: absolute;
+		display: inline-block;
+	}
+}
