@@ -53,8 +53,6 @@
 			$el = createEl(config.selector);
 		}
 
-		console.log("running with: ", config.flyingText);
-
 		$el.flyingText(config.flyingText);
 
 		return me;
