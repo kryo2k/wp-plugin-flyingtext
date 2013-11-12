@@ -261,13 +261,13 @@ function flyTxt_site_header_script_config() {
 			'selector' => flyTxt_get_targetselector(),
 			'enabled' => flyTxt_get_enabled(),
 			'flyingText' => array(
-				'timeFadeIn' => flyTxt_get_timefadein(),
-				'timeFadeOut' => flyTxt_get_timefadeout(),
-				'timeDisplay' => flyTxt_get_timedisplay(),
-				'timeHidden' => flyTxt_get_timehidden(),
-				'timeDelayPerChar' => flyTxt_get_timedelayperchar(),
-				'timeSlowMoMovement' => flyTxt_get_timeslowmomovement(),
-				'distanceSlowMo' => flyTxt_get_distanceslowmo(),
+				'timeFadeIn' => intval(flyTxt_get_timefadein()),
+				'timeFadeOut' => intval(flyTxt_get_timefadeout()),
+				'timeDisplay' => intval(flyTxt_get_timedisplay()),
+				'timeHidden' => intval(flyTxt_get_timehidden()),
+				'timeDelayPerChar' => intval(flyTxt_get_timedelayperchar()),
+				'timeSlowMoMovement' => intval(flyTxt_get_timeslowmomovement()),
+				'distanceSlowMo' => intval(flyTxt_get_distanceslowmo()),
 				'messages' => preg_split('/$\R?^/m', flyTxt_get_messages())
 			)
 		))
