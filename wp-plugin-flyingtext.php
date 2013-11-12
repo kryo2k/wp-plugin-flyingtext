@@ -143,6 +143,8 @@ function flyTxt_site_header_script() {
 function flyTxt_site_header_script_config() {
 	echo sprintf('<script type="text/javascript">window.flyTxt_config = %s;</script>',
 		json_encode(array(
+			'selector' => flyTxt_get_targetselector(),
+			'enabled' => flyTxt_get_enabled()
 		))
 	);
 }
