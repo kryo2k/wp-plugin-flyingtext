@@ -1,17 +1,12 @@
 @CHARSET "UTF-8";
 /* line 4, C:/Users/Hans Doller/Documents/GitHub/wp-plugin-flyingtext/scss/style.scss */
 .flying-text-area {
-  position: absolute;
   line-height: 4em;
-  top: 9em;
-  left: 37%;
-  right: 12%;
   height: 4em;
-  margin: 0 auto;
   color: white;
   white-space: nowrap;
 }
-/* line 15, C:/Users/Hans Doller/Documents/GitHub/wp-plugin-flyingtext/scss/style.scss */
+/* line 10, C:/Users/Hans Doller/Documents/GitHub/wp-plugin-flyingtext/scss/style.scss */
 .flying-text-area .string {
   position: absolute;
   display: inline-block;

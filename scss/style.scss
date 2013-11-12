@@ -2,15 +2,10 @@
 @import "compass/css3";
 
 .flying-text-area {
-	position: absolute;
-	line-height: 4em;
-	top:9em;
-	left: 37%;
-	right: 12%;
-	height: 4em;
-	margin: 0 auto;
-	color: white;
-	white-space: nowrap;
+  line-height: 4em;
+  height: 4em;
+  color: white;
+  white-space: nowrap;
 
 	.string {
 		position: absolute;
