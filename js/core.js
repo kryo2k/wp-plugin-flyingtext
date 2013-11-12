@@ -53,7 +53,7 @@
 			$el = createEl(config.selector);
 		}
 
-		console.log("flyingText: ", config.flyingText);
+		console.log("flyingText: ", $el, config.flyingText);
 
 		$el.flyingText(config.flyingText);
 
