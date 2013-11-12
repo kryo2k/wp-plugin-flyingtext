@@ -8,6 +8,7 @@
 	defaultOpts = {
 		enabled: false,
 		selector: 'header',
+		containerId: 'flying-text-container',
 		flyingText: { // these go direct to the flying text plugin
 			autoStart: true,
 			messages : [],
@@ -39,8 +40,8 @@
 
 		return me; // return latest config
 	}
-	function createEl(sel) {
-		return $('<div class="flying-text-area"></div>')
+	function createEl(sel, id) {
+		return $('<div id="'+id+'" class="flying-text-area"></div>')
 			.appendTo(sel);
 	}
 	function render(me) {
@@ -50,12 +51,10 @@
 		}
 
 		if($el === undefined) {
-			$el = createEl(config.selector);
+			$el = createEl(config.selector, config.containerId);
 		}
 
-		console.log("flyingText: ", $el, config.flyingText);
-
-		$el.flyingText(config.flyingText);
+		$('#' + config.containerId).flyingText(config.flyingText);
 
 		return me;
 	}

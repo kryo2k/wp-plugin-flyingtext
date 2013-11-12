@@ -18,8 +18,10 @@
       timeHidden: 500,
       timeDelayPerChar: 50
     };
+    if($flyBox.length === 0) {
+      throw "Invalid selector ("+selector+") for flying box.";
+    }
     me.start = function(){
-      console.log('starting');
       if(started) return this; // bail if started
       started = true;
 
@@ -27,7 +29,6 @@
           return parseInt(baseTimeout) + (str.length * parseInt(myConfig.timeDelayPerChar));
         },
         rotate = function(callback){
-          console.log('rotating');
           callback = callback || function(){};
 
           var msgs = myConfig.messages, msg;
@@ -37,7 +38,6 @@
 
           // make sure we have messages to display
           if((msg = msgs[rotateIdx]) === undefined) {
-            console.log('out of messages');
             me.stop();
             return;
           }
@@ -63,13 +63,11 @@
         };
 
       rotate(function(rotationId){
-        console.log('rotate finish');
       });
       
       return this;
     };
     me.stop = function(){
-      console.log('stopping');
       if(started) {
         started = false;
       }
@@ -77,7 +75,6 @@
       return this;
     };
     me.configure = function(cfg){
-      console.log('configuring');
       $.extend(myConfig, cfg);
 
       if(firstTimeConfigure && myConfig.autoStart) {
@@ -89,7 +86,6 @@
       return this;
     };
     me.invocation = function(jqe, args){
-      console.log('invoking');
       var argc = args.length, whitelistFn = [
         'start', 'stop'
       ];
@@ -109,7 +105,6 @@
   
   var selectorCache = {};
   function getInstance(selector) {
-      console.log('getInstance');
     return (selectorCache[selector] === undefined) ?
         selectorCache[selector] = new FlyingText(selector) :
         selectorCache[selector];
