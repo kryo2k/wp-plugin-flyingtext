@@ -23,6 +23,8 @@ define ( "FLYTXT_SETTING_TIMEFADEOUT", 'flyTxt_timeFadeOut' );
 define ( "FLYTXT_SETTING_TIMEDISPLAY", 'flyTxt_timeDisplay' );
 define ( "FLYTXT_SETTING_TIMEHIDDEN", 'flyTxt_timeHidden' );
 define ( "FLYTXT_SETTING_TIMEDELAYPERCHAR", 'flyTxt_timeDelayPerChar' );
+define ( "FLYTXT_SETTING_TIMESLOWMOMOVEMENT", 'flyTxt_timeSlowMoMovement' );
+define ( "FLYTXT_SETTING_DISTANCESLOWMO", 'flyTxt_distanceSlowMo' );
 
 function flyTxt_admin_init() {
 	global $wp_version;
@@ -86,6 +88,13 @@ function flyTxt_admin_setting_timehidden() {
 function flyTxt_admin_setting_timedelayperchar() {
 	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEDELAYPERCHAR, flyTxt_get_timedelayperchar());
 }
+function flyTxt_admin_setting_timeslowmomovement() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMESLOWMOMOVEMENT, flyTxt_get_timeslowmomovement());
+}
+function flyTxt_admin_setting_distanceslowmo() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_DISTANCESLOWMO, flyTxt_get_distanceslowmo());
+}
+
 function flyTxt_admin_get_settings_sections() {
 	return (array) apply_filters('flyTxt_admin_get_settings_sections', array(
 		'flyTxt_general' => array(
@@ -146,6 +155,18 @@ function flyTxt_admin_get_settings_fields() {
 			FLYTXT_SETTING_TIMEDELAYPERCHAR => array(
 				'title'             => __( 'Time (in MS) to delay per character', FLYTXT_I18N ),
 				'callback'          => 'flyTxt_admin_setting_timedelayperchar',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_TIMESLOWMOMOVEMENT => array(
+				'title'             => __( 'Time (in MS) to move in slow motion', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timeslowmomovement',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_DISTANCESLOWMO => array(
+				'title'             => __( 'Distance to move in slow motion', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_distanceslowmo',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
@@ -210,13 +231,19 @@ function flyTxt_get_timefadeout() {
 	return get_option ( FLYTXT_SETTING_TIMEFADEOUT, 800 );
 }
 function flyTxt_get_timedisplay() {
-	return get_option ( FLYTXT_SETTING_TIMEDISPLAY, 1200 );
+	return get_option ( FLYTXT_SETTING_TIMEDISPLAY, 0 );
 }
 function flyTxt_get_timehidden() {
 	return get_option ( FLYTXT_SETTING_TIMEHIDDEN, 500 );
 }
 function flyTxt_get_timedelayperchar() {
 	return get_option ( FLYTXT_SETTING_TIMEDELAYPERCHAR, 50 );
+}
+function flyTxt_get_timeslowmomovement() {
+	return get_option ( FLYTXT_SETTING_TIMESLOWMOMOVEMENT, 1300 );
+}
+function flyTxt_get_distanceslowmo() {
+	return get_option ( FLYTXT_SETTING_DISTANCESLOWMO, 30 );
 }
 function flyTxt_site_header_style() {
 	wp_enqueue_style('flyTxt', path_join(plugin_dir_url(__FILE__),
@@ -239,6 +266,8 @@ function flyTxt_site_header_script_config() {
 				'timeDisplay' => flyTxt_get_timedisplay(),
 				'timeHidden' => flyTxt_get_timehidden(),
 				'timeDelayPerChar' => flyTxt_get_timedelayperchar(),
+				'timeSlowMoMovement' => flyTxt_get_timeslowmomovement(),
+				'distanceSlowMo' => flyTxt_get_distanceslowmo(),
 				'messages' => preg_split('/$\R?^/m', flyTxt_get_messages())
 			)
 		))

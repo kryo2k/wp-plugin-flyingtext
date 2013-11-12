@@ -14,9 +14,11 @@
       messages: [],
       timeFadeIn: 450,
       timeFadeOut: 800,
-      timeDisplay: 1200,
+      timeDisplay: 0,
       timeHidden: 500,
-      timeDelayPerChar: 50
+      timeDelayPerChar: 50,
+      timeSlowMoMovement: 1300,
+      distanceSlowMo: 30
     };
     if($flyBox.length === 0) {
       throw "Invalid selector ("+selector+") for flying box.";
@@ -25,7 +27,8 @@
       if(started) return this; // bail if started
       started = true;
 
-      var computeDuration = function(str, baseTimeout){
+      var flexDuration = function(str, baseTimeout){
+          if(baseTimeout === 0) return 0; // execute immediately
           return parseInt(baseTimeout) + (str.length * parseInt(myConfig.timeDelayPerChar));
         },
         rotate = function(callback){
@@ -45,20 +48,22 @@
           // create offscreen element:
           var el = $('<div class="string">')
             .html(msg).appendTo($flyBox);
-        
+
           el.css({left: $flyBox.width(), opacity: 0})
-            .animate({left: (($flyBox.width() / 2) - (el.width() / 2)), opacity: 1}, myConfig.timeFadeIn, function(){
-              window.setTimeout(function(){
-                el.animate({left: -el.width(), opacity: 0}, myConfig.timeFadeOut,function(){
-                  el.remove();
-                  if(started) {
-                    window.setTimeout(function(){
-                      rotate(callback);
-                    },myConfig.timeHidden);
-                  }
-                  callback(rotateIdx++);
-                });
-              },computeDuration(msg,myConfig.timeDisplay));
+            .animate({left: (($flyBox.width() / 2) - (el.width() / 2)) + myConfig.distanceSlowMo, opacity: 1}, myConfig.timeFadeIn, 'linear',function(){
+              el.animate({left:(($flyBox.width() / 2) - (el.width() / 2))}, flexDuration(msg,myConfig.timeSlowMoMovement), 'linear', function(){
+                window.setTimeout(function(){
+                  el.animate({left: -el.width(), opacity: 0}, myConfig.timeFadeOut,function(){
+                    el.remove();
+                    if(started) {
+                      window.setTimeout(function(){
+                        rotate(callback);
+                      },myConfig.timeHidden);
+                    }
+                    callback(rotateIdx++);
+                  });
+                },flexDuration(msg,myConfig.timeDisplay));
+              });
             });
         };
 
