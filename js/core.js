@@ -7,11 +7,21 @@
 	config = {},
 	defaultOpts = {
 		enabled: false,
-		selector: 'header'
+		selector: 'header',
+		flyingText: { // these go direct to the flying text plugin
+			autoStart: true,
+			messages : [],
+			timeFadeIn : 450,
+			timeFadeOut : 800,
+			timeDisplay : 1200,
+			timeHidden : 500,
+			timeDelayPerChar : 50
+		}
 	};
 	function unconfigure(me) {
 
 		if($el !== undefined) {
+			$el.flyingText('stop');
 			$el.remove();
 			$el = undefined;
 		}
@@ -41,6 +51,7 @@
 
 		if($el === undefined) {
 			$el = createEl(config.selector);
+			$el.flyingText(config.flyingText);
 		}
 
 		return me;

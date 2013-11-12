@@ -138,13 +138,27 @@ function flyTxt_site_header_style() {
 }
 function flyTxt_site_header_script() {
 	wp_enqueue_script('flyTxt', path_join(plugin_dir_url(__FILE__),
+		"js/jquery-flying-text.js"), false);
+	wp_enqueue_script('flyTxt', path_join(plugin_dir_url(__FILE__),
 		"js/core.js"), false);
 }
 function flyTxt_site_header_script_config() {
 	echo sprintf('<script type="text/javascript">window.flyTxt_config = %s;</script>',
 		json_encode(array(
 			'selector' => flyTxt_get_targetselector(),
-			'enabled' => flyTxt_get_enabled()
+			'enabled' => flyTxt_get_enabled(),
+			'flyingText' => array(
+				'messages' => array(
+						'Hello',
+						'This is a message',
+						'This is another message',
+						'This is yet another message!',
+						'This is yet another message which is really really really really really long!',
+						'Ok, this is getting boring',
+						'Are you still reading this??',
+						'Go, get some sleep.'
+				)
+			)
 		))
 	);
 }
