@@ -137,9 +137,9 @@ function flyTxt_site_header_style() {
 		"css/style.css"), false);
 }
 function flyTxt_site_header_script() {
-	wp_enqueue_script('flyTxt', path_join(plugin_dir_url(__FILE__),
+	wp_enqueue_script('flyTxt-plugin', path_join(plugin_dir_url(__FILE__),
 		"js/jquery-flying-text.js"), false);
-	wp_enqueue_script('flyTxt', path_join(plugin_dir_url(__FILE__),
+	wp_enqueue_script('flyTxt-bootstrap', path_join(plugin_dir_url(__FILE__),
 		"js/core.js"), false);
 }
 function flyTxt_site_header_script_config() {
