@@ -30,7 +30,7 @@
 		return me; // return latest config
 	}
 	function createEl(sel) {
-		return $('<div><a><img/></a></div>')
+		return $('<div class="flying-text-area"></div>')
 			.appendTo(sel);
 	}
 	function render(me) {
