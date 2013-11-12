@@ -17,6 +17,12 @@ define ( "FLYTXT_KEY_SETTINGS", 'flyTxt-settings' );
 
 define ( "FLYTXT_SETTING_ENABLED",   'flyTxt_enabled' );
 define ( "FLYTXT_SETTING_TARGETSEL", 'flyTxt_targetselector' );
+define ( "FLYTXT_SETTING_MESSAGES", 'flyTxt_messages' );
+define ( "FLYTXT_SETTING_TIMEFADEIN", 'flyTxt_timeFadeIn' );
+define ( "FLYTXT_SETTING_TIMEFADEOUT", 'flyTxt_timeFadeOut' );
+define ( "FLYTXT_SETTING_TIMEDISPLAY", 'flyTxt_timeDisplay' );
+define ( "FLYTXT_SETTING_TIMEHIDDEN", 'flyTxt_timeHidden' );
+define ( "FLYTXT_SETTING_TIMEDELAYPERCHAR", 'flyTxt_timeDelayPerChar' );
 
 function flyTxt_admin_init() {
 	global $wp_version;
@@ -53,17 +59,42 @@ submit_button();
 function flyTxt_admin_setting_section_general() {
 ?><p><?php esc_html_e( 'General settings for flying text plugin.', FLYTXT_I18N ); ?></p><?php
 }
+function flyTxt_admin_setting_section_durations() {
+?><p><?php esc_html_e( 'Duration settings for flying text plugin.', FLYTXT_I18N ); ?><div style="font-style: italic">All time settings have millisecond values.</div></p><?php
+}
 function flyTxt_admin_setting_enabled() {
 	echo sprintf('<input name="%s" type="checkbox" value="1" class="code"%s>',FLYTXT_SETTING_ENABLED, checked( 1, flyTxt_get_enabled(), false ));
 }
 function flyTxt_admin_setting_targetselector() {
 	echo sprintf('<input name="%s" size="50" type="text" value="%s">',FLYTXT_SETTING_TARGETSEL, flyTxt_get_targetselector());
 }
+function flyTxt_admin_setting_messages() {
+	echo sprintf('<textarea name="%s" cols="50" rows="7">%s</textarea>',FLYTXT_SETTING_MESSAGES, flyTxt_get_messages());
+}
+function flyTxt_admin_setting_timefadein() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEFADEIN, flyTxt_get_timefadein());
+}
+function flyTxt_admin_setting_timefadeout() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEFADEOUT, flyTxt_get_timefadeout());
+}
+function flyTxt_admin_setting_timedisplay() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEDISPLAY, flyTxt_get_timedisplay());
+}
+function flyTxt_admin_setting_timehidden() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEHIDDEN, flyTxt_get_timehidden());
+}
+function flyTxt_admin_setting_timedelayperchar() {
+	echo sprintf('<input name="%s" size="10" value="%s">',FLYTXT_SETTING_TIMEDELAYPERCHAR, flyTxt_get_timedelayperchar());
+}
 function flyTxt_admin_get_settings_sections() {
 	return (array) apply_filters('flyTxt_admin_get_settings_sections', array(
 		'flyTxt_general' => array(
 			'title'    => __( 'General settings', FLYTXT_I18N ),
 			'callback' => 'flyTxt_admin_setting_section_general'
+		),
+		'flyTxt_durations' => array(
+			'title'    => __( 'Duration settings', FLYTXT_I18N ),
+			'callback' => 'flyTxt_admin_setting_section_durations'
 		)
 	));
 }
@@ -79,6 +110,43 @@ function flyTxt_admin_get_settings_fields() {
 			FLYTXT_SETTING_TARGETSEL => array(
 				'title'             => __( 'jQuery target for flying text', FLYTXT_I18N ),
 				'callback'          => 'flyTxt_admin_setting_targetselector',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_MESSAGES => array(
+				'title'             => __( 'Messages to display (one per line)', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_messages',
+				'args'              => array()
+			)
+		),
+		'flyTxt_durations' => array(
+			FLYTXT_SETTING_TIMEFADEIN => array(
+				'title'             => __( 'Time to fade in messages', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timefadein',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_TIMEFADEOUT => array(
+				'title'             => __( 'Time to fade out messages', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timefadeout',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_TIMEDISPLAY => array(
+				'title'             => __( 'Time to display messages', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timedisplay',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_TIMEHIDDEN => array(
+				'title'             => __( 'Time to hide messages', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timehidden',
+				'sanitize_callback' => 'intval',
+				'args'              => array()
+			),
+			FLYTXT_SETTING_TIMEDELAYPERCHAR => array(
+				'title'             => __( 'Time (in MS) to delay per character', FLYTXT_I18N ),
+				'callback'          => 'flyTxt_admin_setting_timedelayperchar',
+				'sanitize_callback' => 'intval',
 				'args'              => array()
 			)
 		)
@@ -132,6 +200,24 @@ function flyTxt_get_enabled() {
 function flyTxt_get_targetselector() {
 	return get_option ( FLYTXT_SETTING_TARGETSEL, 'header' );
 }
+function flyTxt_get_messages() {
+	return get_option ( FLYTXT_SETTING_MESSAGES );
+}
+function flyTxt_get_timefadein() {
+	return get_option ( FLYTXT_SETTING_TIMEFADEIN, 450 );
+}
+function flyTxt_get_timefadeout() {
+	return get_option ( FLYTXT_SETTING_TIMEFADEOUT, 800 );
+}
+function flyTxt_get_timedisplay() {
+	return get_option ( FLYTXT_SETTING_TIMEDISPLAY, 1200 );
+}
+function flyTxt_get_timehidden() {
+	return get_option ( FLYTXT_SETTING_TIMEHIDDEN, 500 );
+}
+function flyTxt_get_timedelayperchar() {
+	return get_option ( FLYTXT_SETTING_TIMEDELAYPERCHAR, 50 );
+}
 function flyTxt_site_header_style() {
 	wp_enqueue_style('flyTxt', path_join(plugin_dir_url(__FILE__),
 		"css/style.css"), false);
@@ -148,16 +234,12 @@ function flyTxt_site_header_script_config() {
 			'selector' => flyTxt_get_targetselector(),
 			'enabled' => flyTxt_get_enabled(),
 			'flyingText' => array(
-				'messages' => array(
-						'Hello',
-						'This is a message',
-						'This is another message',
-						'This is yet another message!',
-						'This is yet another message which is really really really really really long!',
-						'Ok, this is getting boring',
-						'Are you still reading this??',
-						'Go, get some sleep.'
-				)
+				'timeFadeIn' => flyTxt_get_timefadein(),
+				'timeFadeOut' => flyTxt_get_timefadeout(),
+				'timeDisplay' => flyTxt_get_timedisplay(),
+				'timeHidden' => flyTxt_get_timehidden(),
+				'timeDelayPerChar' => flyTxt_get_timedelayperchar(),
+				'messages' => preg_split('/$\R?^/m', flyTxt_get_messages())
 			)
 		))
 	);
