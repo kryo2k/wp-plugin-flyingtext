@@ -153,13 +153,13 @@ function flyTxt_admin_get_settings_fields() {
 				'args'              => array()
 			),
 			FLYTXT_SETTING_TIMEDELAYPERCHAR => array(
-				'title'             => __( 'Time (in MS) to delay per character', FLYTXT_I18N ),
+				'title'             => __( 'Time to delay per character', FLYTXT_I18N ),
 				'callback'          => 'flyTxt_admin_setting_timedelayperchar',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
 			),
 			FLYTXT_SETTING_TIMESLOWMOMOVEMENT => array(
-				'title'             => __( 'Time (in MS) to move in slow motion', FLYTXT_I18N ),
+				'title'             => __( 'Time to move in slow motion', FLYTXT_I18N ),
 				'callback'          => 'flyTxt_admin_setting_timeslowmomovement',
 				'sanitize_callback' => 'intval',
 				'args'              => array()
